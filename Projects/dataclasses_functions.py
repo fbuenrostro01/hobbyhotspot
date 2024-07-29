@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import List
 
 @dataclass
 class Users:
@@ -7,6 +8,15 @@ class Users:
     username: str
     password: str
     zip_code: int
+    hobby1: str
+    hobby2: str
+    hobby3: str
+
+
+class Hobbies:
+    pass
+
+
 
 
 
