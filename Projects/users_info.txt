@@ -1,6 +1,62 @@
 First Name: Faustino
 Last Name: Buenrostro
 Username: hehe69
-Password: 1234567
-Zip Code: 38878
+Password: 123456
+City: Jackson
+
+First Name: Maria
+Last Name: Lopez
+Username: marilopez
+Password: password123
+City: Amory
+
+First Name: John
+Last Name: Smith
+Username: johnsmith
+Password: qwertyui
+City: Tupelo
+
+First Name: Emily
+Last Name: Davis
+Username: emdavis
+Password: emily2021
+City: Corinth
+
+First Name: Michael
+Last Name: Johnson
+Username: mjohnson
+Password: michael456
+City: Jackson
+
+First Name: Olivia
+Last Name: Brown
+Username: oliviab
+Password: olive789
+City: Calhoun City
+
+First Name: Daniel
+Last Name: Garcia
+Username: dgarcia
+Password: daniel123
+City: Carthage
+
+First Name: Sophia
+Last Name: Martinez
+Username: smartinez
+Password: sophia789
+City: Iuka
+
+First Name: William
+Last Name: Anderson
+Username: wanderson
+Password: william456
+City: Mantachie
+
+First Name: Ava
+Last Name: Taylor
+Username: avataylor
+Password: ava2021
+City: Tupelo
+
+
 
