@@ -26,7 +26,7 @@ def print_computer_with_text(text):
   #Print the ASCII art and the scrolling text
     print(ascii_art)
     print(text)
-def scroll_text(text, width=80, delay=0.1):
+def scroll_text(text, width=80, delay=0.10):
     """Scroll the text across the screen.
     Parameters:
     text (str): The text to scroll.
