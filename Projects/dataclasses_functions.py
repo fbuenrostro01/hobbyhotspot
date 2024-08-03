@@ -29,7 +29,7 @@ def new_account():
             if len(user_password)>=6:
                 break
             else:
-                print("Please make sure its atleast 6 digits long!")
+                print("Please make sure its at least 6 digits long!")
         print("Confirm your password again")
         while True:
             user_input=input("Password: ")

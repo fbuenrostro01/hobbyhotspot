@@ -7,3 +7,12 @@ Hobby #1: Gardening
 Hobby #2: Yoga
 Hobby #3: Reading
 
+First Name: brittney
+Last Name: bean
+Username: bbean85
+Password: bbean85
+City: tupelo
+Hobby #1: Gardening
+Hobby #2: Painting
+Hobby #3: Drawing
+
