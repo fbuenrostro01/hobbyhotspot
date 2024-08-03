@@ -13,9 +13,7 @@ class User:
 @dataclass
 class Hobbies:
     username: str
-    hobby1: str
-    hobby2: str
-    hobby3: str
+    hobby: list
 
 def new_account():
     first_name=input("Type your First Name: ")
@@ -47,20 +45,32 @@ def new_account():
     hobbies_list = [
     "Reading", "Traveling", "Cooking", "Gardening", "Painting",
     "Drawing", "Photography", "Playing musical instruments", "Writing", "Hiking",
-    "Running", "Cycling", "Swimming", "Knitting or crocheting", "Playing sports",
-    "Playing video games", "Bird watching", "Dancing", "Yoga", "Crafting"
+    "Running", "Cycling", "Swimming", "Knitting or crocheting", "Sports",
+    "Gaming", "Bird watching", "Dancing", "Yoga", "Crafting"
 ]
     print("Pick your 3 hobbies form this list")
     print(", ".join(hobbies_list))
-    while hobbies_list:
-        hob = [hobby1, hobby2, hobby3]
-        hobby1=input("Hobby #1: ").capitalize()
-        hobby2=input("Hobby #2: ").capitalize()
-        hobby3=input("Hobby #3: ").capitalize()
-        if hob != hobbies_list:
-            print("Sorry, we could not find your hobby within our database. Please enter a different hobby. ")
+    # running = True
+    # while running:
+    #     hobby1=input("Hobby #1: ").capitalize() 
+    #     hobby2=input("Hobby #2: ").capitalize()
+    #     hobby3=input("Hobby #3: ").capitalize()
+    #     running = False
+    #     if hobbies_list != hobby1 or hobbies_list != hobby2 or hobbies_list != hobby3:
+    #         print("Sorry, we could not find your hobby within our database. Please enter a different hobby. ")
+
+    selected_hobbies = []
+    while len(selected_hobbies) < 3:
+        hobby = input(f"Hobby #{len(selected_hobbies) + 1}: ").capitalize()
+        if hobby in hobbies_list:
+            selected_hobbies.append(hobby)
+        else:
+            print(f"Sorry, '{hobby}' is not in the list. Please choose a different hobby.")
+
+    print("Your selected hobbies are:", ", ".join(selected_hobbies))
+        
     user=User(first_name,last_name,username,user_password,city)
-    hobbies=Hobbies(username,hobby1,hobby2,hobby3)
+    hobbies=Hobbies(username,hobby)
     print("You have sucessfuly made a new account!!")
     return user,hobbies
 def write_users_to_txt(user:User,hobbies: Hobbies,users_info_path: str):
@@ -70,9 +80,9 @@ def write_users_to_txt(user:User,hobbies: Hobbies,users_info_path: str):
         txt_file.write(f"Username: {user.username}\n")
         txt_file.write(f"Password: {user.password}\n")
         txt_file.write(f"City: {user.city}\n")
-        txt_file.write(f"Hobby #1: {hobbies.hobby1}\n")
-        txt_file.write(f"Hobby #2: {hobbies.hobby2}\n")
-        txt_file.write(f"Hobby #3: {hobbies.hobby3}\n")
+        txt_file.write(f"Hobby #1: {hobbies.hobby}\n")
+        txt_file.write(f"Hobby #2: {hobbies.hobby}\n")
+        txt_file.write(f"Hobby #3: {hobbies.hobby}\n")
         txt_file.write("\n")
 
 def log_user_in(users_info_path: str):
@@ -140,9 +150,15 @@ def update_user_hobbies(users_info_path: str, current_user: str):
     ]
     print("Update your hobbies. Pick 3 hobbies from this list:")
     print(", ".join(hobbies_list))
-    hobby1 = input("New Hobby #1: ").capitalize()
-    hobby2 = input("New Hobby #2: ").capitalize()
-    hobby3 = input("New Hobby #3: ").capitalize()
+    selected_hobbies = []
+    while len(selected_hobbies) < 3:
+        hobby = input(f"Hobby #{len(selected_hobbies) + 1}: ").capitalize()
+        if hobby in hobbies_list:
+            selected_hobbies.append(hobby)
+        else:
+            print(f"Sorry, '{hobby}' is not in the list. Please choose a different hobby.")
+
+    print("Your selected hobbies are:", ", ".join(selected_hobbies))
 
     updated_lines = []
     with open(users_info_path, "r") as txt_file:
@@ -159,11 +175,11 @@ def update_user_hobbies(users_info_path: str, current_user: str):
             updated_lines.append(line)
         elif collect_hobbies and line.startswith("Hobby #"):
             if "Hobby #1:" in line:
-                updated_lines.append(f"Hobby #1: {hobby1}\n")
+                updated_lines.append(f"Hobby #1: {hobby}\n")
             elif "Hobby #2:" in line:
-                updated_lines.append(f"Hobby #2: {hobby2}\n")
+                updated_lines.append(f"Hobby #2: {hobby}\n")
             elif "Hobby #3:" in line:
-                updated_lines.append(f"Hobby #3: {hobby3}\n")
+                updated_lines.append(f"Hobby #3: {hobby}\n")
         else:
             updated_lines.append(line)
 
