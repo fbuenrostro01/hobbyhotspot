@@ -52,9 +52,13 @@ def new_account():
 ]
     print("Pick your 3 hobbies form this list")
     print(", ".join(hobbies_list))
-    hobby1=input("Hobby #1: ").capitalize()
-    hobby2=input("Hobby #2: ").capitalize()
-    hobby3=input("Hobby #3: ").capitalize()
+    while hobbies_list:
+        hob = [hobby1, hobby2, hobby3]
+        hobby1=input("Hobby #1: ").capitalize()
+        hobby2=input("Hobby #2: ").capitalize()
+        hobby3=input("Hobby #3: ").capitalize()
+        if hob != hobbies_list:
+            print("Sorry, we could not find your hobby within our database. Please enter a different hobby. ")
     user=User(first_name,last_name,username,user_password,city)
     hobbies=Hobbies(username,hobby1,hobby2,hobby3)
     print("You have sucessfuly made a new account!!")
