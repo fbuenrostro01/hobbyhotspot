@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import List
 
 @dataclass
 class User:
@@ -8,7 +7,6 @@ class User:
     username: str
     password: str
     city: str
-   
 
 @dataclass
 class Hobbies:
@@ -16,32 +14,25 @@ class Hobbies:
     hobby: list
 
 def new_account():
-    first_name=input("Type your First Name: ")
-    last_name=input("Type you Last name: ")
+    first_name = input("Type your First Name: ")
+    last_name = input("Type your Last name: ")
 
-    password=True
-    while password:
-        print("Please type the password that you would like to use, it must be atleast 6 digits long!")
-        while True:
-            user_password=input("Password: ")
-            if len(user_password)>=6:
-                break
-            else:
-                print("Please make sure its atleast 6 digits long!")
-        print("Confirm your password again")
-        while True:
-            user_input=input("Password: ")
-            if user_input==user_password:
-                password=False
+    while True:
+        print("Please type the password that you would like to use, it must be at least 6 characters long!")
+        user_password = input("Password: ")
+        if len(user_password) >= 6:
+            confirm_password = input("Confirm your password: ")
+            if user_password == confirm_password:
                 break
             else:
                 print("Passwords do not match!")
+        else:
+            print("Please make sure it is at least 6 characters long!")
 
     print("Please type your username")
-    username=input("Username: ")
-    city=input("Please type your city. ")
-        
-    
+    username = input("Username: ")
+    city = input("Please type your city: ")
+
     hobbies_list = [
     "Reading", "Traveling", "Cooking", "Gardening", "Painting",
     "Drawing", "Photography", "Playing musical instruments", "Writing", "Hiking",
@@ -50,15 +41,6 @@ def new_account():
 ]
     print("Pick your 3 hobbies form this list")
     print(", ".join(hobbies_list))
-    # running = True
-    # while running:
-    #     hobby1=input("Hobby #1: ").capitalize() 
-    #     hobby2=input("Hobby #2: ").capitalize()
-    #     hobby3=input("Hobby #3: ").capitalize()
-    #     running = False
-    #     if hobbies_list != hobby1 or hobbies_list != hobby2 or hobbies_list != hobby3:
-    #         print("Sorry, we could not find your hobby within our database. Please enter a different hobby. ")
-
     selected_hobbies = []
     while len(selected_hobbies) < 3:
         hobby = input(f"Hobby #{len(selected_hobbies) + 1}: ").capitalize()
@@ -88,59 +70,56 @@ def write_users_to_txt(user:User,hobbies: Hobbies,users_info_path: str):
 def log_user_in(users_info_path: str):
     while True:
         print("Please type your username")
-        username=input("Username: ")
+        username = input("Username: ")
 
-        user_found=False
-        password_line=""
-        city=""
+        user_found = False
+        password_line = ""
+        city = ""
 
-        with open(users_info_path,"r") as txt_file:
-            find_city=False
+        with open(users_info_path, "r") as txt_file:  # Open in read mode
+            find_city = False
             for line in txt_file:
                 if line.startswith("Username:"):
-                    file_username=line.split(": ")[1].strip()
-                    if file_username==username:
-                        user_found=True
-                        password_line=next(txt_file).strip()
-                        find_city=True       
+                    file_username = line.split(": ")[1].strip()
+                    if file_username == username:
+                        user_found = True
+                        password_line = next(txt_file).strip()
+                        find_city = True       
                 elif find_city and line.startswith("City:"):
-                    city=line.split(": ")[1].strip()
+                    city = line.split(": ")[1].strip()
                     break
         if user_found:
-                 print("Username found! please enter your password to log in")
-                 user_password=input("Password: ")
-                 if password_line.startswith("Password: "):
-                     file_password=password_line.split(": ")[1].strip()
-                     if file_password==user_password:
-                         print("Login successful!")
-                         return username,city
-                     else:
-                         print("Incorrect password! Try again.")
+            print("Username found! Please enter your password to log in")
+            user_password = input("Password: ")
+            if password_line.startswith("Password: "):
+                file_password = password_line.split(": ")[1].strip()
+                if file_password == user_password:
+                    print("Login successful!")
+                    return username, city
+                else:
+                    print("Incorrect password! Try again.")
         else:
             print("Username not found! Try again.")
     
-def show_user_hobbies(users_info_path: str,current_user: str):
-    hobbies=[]
-    with open(users_info_path,"r") as txt_file:
-        collect_hobbies=False
+def show_user_hobbies(users_info_path: str, current_user: str):
+    hobbies = []
+    with open(users_info_path, "r") as txt_file:
+        collect_hobbies = False
         for line in txt_file:
             if line.startswith("Username:"):
-                file_username=line.split(": ")[1].strip()
-                collect_hobbies=(file_username==current_user)
+                file_username = line.split(": ")[1].strip()
+                collect_hobbies = (file_username == current_user)
             elif collect_hobbies:
                 if line.startswith("Hobby #"):
-                    hobby=line.split(": ")[1].strip()
+                    hobby = line.split(": ")[1].strip()
                     hobbies.append(hobby)
-                elif line.strip()=="":
+                elif line.strip() == "":
                     break 
     if hobbies:
         print(f"{current_user}'s hobbies:")
         for hobby in hobbies:
             print(f"- {hobby}")
 
-
-
-                
 def update_user_hobbies(users_info_path: str, current_user: str): 
     hobbies_list = [
         "Reading", "Traveling", "Cooking", "Gardening", "Painting",
@@ -186,9 +165,6 @@ def update_user_hobbies(users_info_path: str, current_user: str):
     with open(users_info_path, "w") as txt_file:
         txt_file.writelines(updated_lines)
 
-
-
-    
 def show_users_in_same_city(users_info_path: str, current_city: str):
     users_in_city = []
     
@@ -214,7 +190,6 @@ def show_users_in_same_city(users_info_path: str, current_city: str):
                 elif line.startswith("City:"):
                     user['city'] = line.split(": ")[1].strip()
                     
-                
                     if 'first_name' in user and 'last_name' in user and 'username' in user:
                         users_in_city.append(user)
                     user = {}  
@@ -222,7 +197,6 @@ def show_users_in_same_city(users_info_path: str, current_city: str):
     if users_in_city:
         print(f"Users in {current_city}:")
         for user in users_in_city:
-                print(f"- {user['first_name']} {user['last_name']} (Username: {user['username']})")
-          
+            print(f"- {user['first_name']} {user['last_name']} (Username: {user['username']})")
     else:
         print(f"No users found in {current_city}.")

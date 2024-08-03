@@ -3,7 +3,8 @@ import os
 import sys
 from io import StringIO
 from unittest.mock import patch
-from your_module import User, Hobbies, new_account, write_users_to_txt, log_user_in, show_user_hobbies, update_user_hobbies, show_users_in_same_city
+from dataclasses_functions import *
+from HobbyHotspot import User, Hobbies, new_account, write_users_to_txt, log_user_in, show_user_hobbies, update_user_hobbies, show_users_in_same_city
 
 class TestUserFunctions(unittest.TestCase):
 
@@ -35,7 +36,7 @@ Hobby #3: Running
         if os.path.exists(self.test_file_path):
             os.remove(self.test_file_path)
 
-    @patch('builtins.input', side_effect=['Emily', 'Davis', 'password123', 'password123', 'alicej', 'New York', 'Reading', 'Hiking', 'Cooking'])
+    @patch('builtins.input', side_effect=['Emily', 'Davis', 'password123', 'password123', 'emilyd', 'New York', 'Reading', 'Hiking', 'Cooking'])
     def test_new_account(self, mock_input):
         user, hobbies = new_account()
         self.assertEqual(user.first_name, 'Emily')

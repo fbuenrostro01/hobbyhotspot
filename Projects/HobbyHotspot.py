@@ -26,7 +26,7 @@ def print_computer_with_text(text):
   #Print the ASCII art and the scrolling text
     print(ascii_art)
     print(text)
-def scroll_text(text, width=80, delay=0.1):
+def scroll_text(text, width=80, delay=0.10):
     """Scroll the text across the screen.
     Parameters:
     text (str): The text to scroll.
@@ -61,7 +61,7 @@ while True:
         print(f"Current User {current_user}")
         logged_in=True
         while logged_in:
-            print("Would You Like to View all users near you with the same hobbies [View],Look at your hobbies [Look], or log out [Logout]?")
+            print("Would You Like to View all users near you with the same hobbies [View],Look at your hobbies [Look], or log out [Log out]?")
             user_input = input("> ").capitalize()
             if user_input == "Look":
                 show_user_hobbies(users_info_path,current_user)
@@ -73,7 +73,7 @@ while True:
                     elif user_input == "No":
                         break
     
-            elif user_input == "Logout":
+            elif user_input == "Log out":
                 print("Logging out...")
                 logged_in = False
             elif user_input == "View":
