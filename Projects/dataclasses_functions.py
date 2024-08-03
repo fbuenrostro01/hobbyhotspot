@@ -131,8 +131,8 @@ def update_user_hobbies(users_info_path: str, current_user: str):
     hobbies_list = [
         "Reading", "Traveling", "Cooking", "Gardening", "Painting",
         "Drawing", "Photography", "Playing musical instruments", "Writing", "Hiking",
-        "Running", "Cycling", "Swimming", "Knitting or crocheting", "Playing sports",
-        "Playing video games", "Bird watching", "Dancing", "Yoga", "Crafting"
+        "Running", "Cycling", "Swimming", "Knitting or crocheting", "Sports",
+        "Games", "Bird watching", "Dancing", "Yoga", "Crafting"
     ]
     print("Update your hobbies. Pick 3 hobbies from this list:")
     print(", ".join(hobbies_list))
