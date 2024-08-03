@@ -1,45 +1,20 @@
-First Name: Brittney
-Last Name: BEan
-Username: bbean85
-Password: bbean85
-City: Tupelo
-Hobby #1: Gardening
-Hobby #2: Yoga
-Hobby #3: Reading
 
-First Name: brittney
-Last Name: bean
-Username: bbean85
-Password: bbean85
-City: tupelo
-Hobby #1: Gardening
-Hobby #2: Painting
-Hobby #3: Drawing
-
-First Name: Aleah
-Last Name: Bean
-Username: abean07
-Password: abean07
-City: Pontotoc
-Hobby #1: Traveling
-Hobby #2: Cooking
-Hobby #3: Reading
 
 First Name: Faustino
-Last Name: BUenrostr
-Username: hehe69
+Last Name: Buenrostro
+Username: lol44
 Password: 123456
-City: Vardaman
+City: vardaman
 Hobby #1: Drawing
-Hobby #2: Writing
-Hobby #3: Running
+Hobby #2: Drawing
+Hobby #3: Drawing
 
 First Name: ellen
 Last Name: moss
-Username: eliema
-Password: 123444
-City: Vardaman
-Hobby #1: Painting
-Hobby #2: Writing
-Hobby #3: Running
+Username: britney
+Password: 123456
+City: vardaman
+Hobby #1: Drawing
+Hobby #2: Drawing
+Hobby #3: Drawing
 

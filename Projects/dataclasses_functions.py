@@ -7,6 +7,7 @@ class User:
     username: str
     password: str
     city: str
+    
 
 @dataclass
 class Hobbies:
@@ -39,7 +40,7 @@ def new_account():
     "Running", "Cycling", "Swimming", "Knitting or crocheting", "Sports",
     "Gaming", "Bird watching", "Dancing", "Yoga", "Crafting"
 ]
-    print("Pick your 3 hobbies form this list")
+    print("Pick your 3 hobbies from this list")
     print(", ".join(hobbies_list))
     selected_hobbies = []
     while len(selected_hobbies) < 3:
