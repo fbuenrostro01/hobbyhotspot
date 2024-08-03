@@ -1,103 +1,9 @@
 import unittest
 import os
+import sys
 from io import StringIO
 from unittest.mock import patch
-
-def show_user_hobbies(users_info_path: str, current_user: str):
-    hobbies = []
-    with open(users_info_path, "r") as txt_file:
-        collect_hobbies = False
-        for line in txt_file:
-            if line.startswith("Username:"):
-                file_username = line.split(": ")[1].strip()
-                collect_hobbies = (file_username == current_user)
-            elif collect_hobbies:
-                if line.startswith("Hobby #"):
-                    hobby = line.split(": ")[1].strip()
-                    hobbies.append(hobby)
-                elif line.strip() == "":
-                    break 
-    if hobbies:
-        print(f"{current_user}'s hobbies:")
-        for hobby in hobbies:
-            print(f"- {hobby}")
-
-def update_user_hobbies(users_info_path: str, current_user: str): 
-    hobbies_list = [
-        "Reading", "Traveling", "Cooking", "Gardening", "Painting",
-        "Drawing", "Photography", "Playing musical instruments", "Writing", "Hiking",
-        "Running", "Cycling", "Swimming", "Knitting or crocheting", "Playing sports",
-        "Playing video games", "Bird watching", "Dancing", "Yoga", "Crafting"
-    ]
-    print("Update your hobbies. Pick 3 hobbies from this list:")
-    print(", ".join(hobbies_list))
-    hobby1 = input("New Hobby #1: ").capitalize()
-    hobby2 = input("New Hobby #2: ").capitalize()
-    hobby3 = input("New Hobby #3: ").capitalize()
-
-    updated_lines = []
-    with open(users_info_path, "r") as txt_file:
-        lines = txt_file.readlines()
-
-    collect_hobbies = False
-    for line in lines:
-        if line.startswith("Username:"):
-            file_username = line.split(": ")[1].strip()
-            if file_username == current_user:
-                collect_hobbies = True
-            else:
-                collect_hobbies = False
-            updated_lines.append(line)
-        elif collect_hobbies and line.startswith("Hobby #"):
-            if "Hobby #1:" in line:
-                updated_lines.append(f"Hobby #1: {hobby1}\n")
-            elif "Hobby #2:" in line:
-                updated_lines.append(f"Hobby #2: {hobby2}\n")
-            elif "Hobby #3:" in line:
-                updated_lines.append(f"Hobby #3: {hobby3}\n")
-        else:
-            updated_lines.append(line)
-
-    with open(users_info_path, "w") as txt_file:
-        txt_file.writelines(updated_lines)
-
-def show_users_in_same_city(users_info_path: str, current_city: str):
-    users_in_city = []
-    
-    with open(users_info_path, "r") as txt_file:
-        collect_city = False
-        user = {}
-        
-        for line in txt_file:
-            if line.startswith("City:"):
-                file_city = line.split(": ")[1].strip()
-                if file_city == current_city:
-                    collect_city = True
-                else:
-                    collect_city = False
-            
-            if collect_city:
-                if line.startswith("First Name:"):
-                    user['first_name'] = line.split(": ")[1].strip()
-                elif line.startswith("Last Name:"):
-                    user['last_name'] = line.split(": ")[1].strip()
-                elif line.startswith("Username:"):
-                    user['username'] = line.split(": ")[1].strip()
-                elif line.startswith("City:"):
-                    user['city'] = line.split(": ")[1].strip()
-                    
-                
-                    if 'first_name' in user and 'last_name' in user and 'username' in user:
-                        users_in_city.append(user)
-                    user = {}  
-                  
-    if users_in_city:
-        print(f"Users in {current_city}:")
-        for user in users_in_city:
-                print(f"- {user['first_name']} {user['last_name']} (Username: {user['username']})")
-          
-    else:
-        print(f"No users found in {current_city}.")
+from your_module import User, Hobbies, new_account, write_users_to_txt, log_user_in, show_user_hobbies, update_user_hobbies, show_users_in_same_city
 
 class TestUserFunctions(unittest.TestCase):
 
@@ -105,28 +11,23 @@ class TestUserFunctions(unittest.TestCase):
         # Create a temporary file with sample data
         self.test_file_path = 'test_users_info.txt'
         with open(self.test_file_path, 'w') as f:
-            f.write("""Username: alice
+            f.write("""First Name: EMily
+Last Name: Davis    
+Username: Emily
+Password: password123
+City: New York
 Hobby #1: Reading
 Hobby #2: Hiking
+Hobby #3: Painting
 
-Username: bob
+First Name: John
+Last Name: Smith
+Username: bobsmith
+Password: password123
+City: Los Angeles
 Hobby #1: Cooking
 Hobby #2: Cycling
-
-First Name: Charlie
-Last Name: Brown
-Username: charlieb
-City: New York
-
-First Name: Alice
-Last Name: Johnson
-Username: alicej
-City: New York
-
-First Name: David
-Last Name: Davis
-Username: davidd
-City: Chicago
+Hobby #3: Running
 """)
 
     def tearDown(self):
@@ -134,65 +35,96 @@ City: Chicago
         if os.path.exists(self.test_file_path):
             os.remove(self.test_file_path)
 
-    def test_show_user_hobbies(self):
-        # Redirect stdout to capture print statements
+    @patch('builtins.input', side_effect=['Emily', 'Davis', 'password123', 'password123', 'alicej', 'New York', 'Reading', 'Hiking', 'Cooking'])
+    def test_new_account(self, mock_input):
+        user, hobbies = new_account()
+        self.assertEqual(user.first_name, 'Emily')
+        self.assertEqual(user.last_name, 'Davis')
+        self.assertEqual(user.username, 'emilyd')
+        self.assertEqual(user.password, 'password123')
+        self.assertEqual(user.city, 'New York')
+        self.assertEqual(hobbies.hobby1, 'Reading')
+        self.assertEqual(hobbies.hobby2, 'Hiking')
+        self.assertEqual(hobbies.hobby3, 'Cooking')
+
+    def test_write_users_to_txt(self):
+        user = User('Jane', 'Doe', 'janedoe', 'newpassword', 'San Francisco')
+        hobbies = Hobbies('janedoe', 'Swimming', 'Running', 'Cycling')
+        write_users_to_txt(user, hobbies, self.test_file_path)
+
+        with open(self.test_file_path, 'r') as f:
+            content = f.read()
+
+        expected_content = """First Name: Emily
+Last Name: Davis
+Username: emilyd
+Password: password123
+City: New York
+Hobby #1: Reading
+Hobby #2: Hiking
+Hobby #3: Painting
+
+First Name: John
+Last Name: Smith
+Username: bobsmith
+Password: password123
+City: Los Angeles
+Hobby #1: Cooking
+Hobby #2: Cycling
+Hobby #3: Running
+
+First Name: Maria
+Last Name: Lopez
+Username: marialopez
+Password: newpassword
+City: San Francisco
+Hobby #1: Swimming
+Hobby #2: Running
+Hobby #3: Cycling
+"""
+        self.assertEqual(content, expected_content)
+
+    @patch('builtins.input', side_effect=['Emily', 'password123'])
+    def test_log_user_in(self, mock_input):
+        username, city = log_user_in(self.test_file_path)
+        self.assertEqual(username, 'Emily')
+        self.assertEqual(city, 'New York')
+
+    @patch('builtins.input', side_effect=['Emily'])
+    def test_show_user_hobbies(self, mock_input):
         captured_output = StringIO()
         sys.stdout = captured_output
 
-        show_user_hobbies(self.test_file_path, 'alice')
+        show_user_hobbies(self.test_file_path, 'Emily')
         sys.stdout = sys.__stdout__
 
-        expected_output = "alice's hobbies:\n- Reading\n- Hiking\n"
+        expected_output = "emilyd's hobbies:\n- Reading\n- Hiking\n- Painting\n"
         self.assertEqual(captured_output.getvalue(), expected_output)
 
-        captured_output = StringIO()
-        sys.stdout = captured_output
-        
-        show_user_hobbies(self.test_file_path, 'bob')
-        sys.stdout = sys.__stdout__
-
-        expected_output = "bob's hobbies:\n- Cooking\n- Cycling\n"
-        self.assertEqual(captured_output.getvalue(), expected_output)
-
-        captured_output = StringIO()
-        sys.stdout = captured_output
-        
-        show_user_hobbies(self.test_file_path, 'charlie')
-        sys.stdout = sys.__stdout__
-
-        expected_output = "No hobbies found for charlie.\n"
-        self.assertEqual(captured_output.getvalue(), expected_output)
-
-    @patch('builtins.input', side_effect=['Reading', 'Traveling', 'Cooking'])
+    @patch('builtins.input', side_effect=['Reading', 'Traveling', 'Gardening'])
     def test_update_user_hobbies(self, mock_input):
-        update_user_hobbies(self.test_file_path, 'alicej')
+        update_user_hobbies(self.test_file_path, 'Emily')
 
         with open(self.test_file_path, 'r') as f:
             updated_content = f.read()
-        
-        expected_content = """Username: alice
+
+        expected_content = """First Name: Emily
+Last Name: Smith
+Username: John
+Password: password123
+City: New York
 Hobby #1: Reading
 Hobby #2: Traveling
-Hobby #3: Cooking
+Hobby #3: Gardening
 
-Username: bob
+First Name: Emily
+Last Name: Davis
+Username: bobsmith
+Password: password123
+City: Los Angeles
 Hobby #1: Cooking
 Hobby #2: Cycling
-
-First Name: Charlie
-Last Name: Brown
-Username: charlieb
-City: New York
-
-First Name: Alice
-Last Name: Johnson
-Username: alicej
-City: New York
-
-First Name: David
-Last Name: Davis
-Username: davidd
-City: Chicago
+Hobby #3: Running
 """
         self.assertEqual(updated_content, expected_content)
 
@@ -203,7 +135,7 @@ City: Chicago
         show_users_in_same_city(self.test_file_path, 'New York')
         sys.stdout = sys.__stdout__
 
-        expected_output = "Users in New York:\n- Charlie Brown (Username: charlieb)\n- Alice Johnson (Username: alicej)\n"
+        expected_output = "Users in New York:\n- Emily Davis (Username: emilyd)\n"
         self.assertEqual(captured_output.getvalue(), expected_output)
 
         captured_output = StringIO()

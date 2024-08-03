@@ -1,0 +1,9 @@
+First Name: Brittney
+Last Name: BEan
+Username: bbean85
+Password: bbean85
+City: Tupelo
+Hobby #1: Gardening
+Hobby #2: Yoga
+Hobby #3: Reading
+
